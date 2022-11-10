@@ -99,3 +99,13 @@ NB: Each car is associated to a client
 
 
 **Good Luck!**
+
+
+
+## Plan for the Project 
+
+1. Setup :
+creating a front end with next.js 
+creating a back end with nest.js
+installing postgresql
+installing docker
