@@ -13,11 +13,5 @@ import { BrandInterface, BrandsService } from './brands.service';
 
 @Controller('brand')
 export class BrandController {
-  constructor(private readonly brandService: BrandsService) {}
 
-  @Get()
-  async findAll(@Req() request: Request) {
-    const cats: Array<BrandInterface> = await this.brandService.findAll();
-    return cats;
-  }
 }

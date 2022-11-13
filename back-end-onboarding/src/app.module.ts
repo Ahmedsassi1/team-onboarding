@@ -4,8 +4,8 @@ import { BrandsModule } from './modules/brands/brands.module';
 import { CarsModule } from './modules/cars/cars.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { BrandsService } from './modules/brands/brands.service';
 import { BrandController } from './modules/brands/brands.controller';
+
 
 @Module({
   imports: [
@@ -29,7 +29,7 @@ import { BrandController } from './modules/brands/brands.controller';
     CarsModule,
   ],
 
-  controllers: [BrandController],
+  controllers: [],
   providers: [],
 })
 export class AppModule {}

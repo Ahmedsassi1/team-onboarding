@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Brand } from '../../Database/brands.entity';
 import { Repository } from 'typeorm';
 export interface BrandInterface {
-  name: string;
   id: number;
+  name: string;
   image: string;
 }
 @Injectable()
@@ -13,7 +13,7 @@ export class BrandsService {
     @InjectRepository(Brand)
     private brandRepository: Repository<BrandInterface>,
   ) {}
-  findAll(): Promise<BrandInterface[]> {
-    return this.brandRepository.find();
+  create(brand: BrandInterface): Promise<BrandInterface> {
+    return this.brandRepository.save(this.brandRepository.create(brand));
   }
 }
