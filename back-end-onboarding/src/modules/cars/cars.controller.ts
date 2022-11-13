@@ -2,32 +2,32 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CarsService } from './cars.service';
 
 
-@Controller('users')
+@Controller('cars')
 export class CarsController {
-  constructor(private readonly usersService: CarsService) {}
+  constructor(private readonly carservice: CarsService) {}
 
   @Post('add')
-  create(@Body() createUser: any) {
-    return this.usersService.create(createUser);
+  create(@Body() createCar: any) {
+    return this.carservice.create(createCar);
   }
 
   @Get('all')
   findAll() {
-    return this.usersService.findAll();
+    return this.carservice.findAll();
   }
 
   @Get('one/:id')
   findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+    return this.carservice.findOne(id);
   }
 
   @Patch('update/:id')
-  update(@Param('id') id: string, @Body() updateUser: any) {
-    return this.usersService.update(+id, updateUser);
+  update(@Param('id') id: string, @Body() updateCar: any) {
+    return this.carservice.update(+id, updateCar);
   }
 
   @Delete('delete/:id')
   remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+    return this.carservice.remove(+id);
   }
 }

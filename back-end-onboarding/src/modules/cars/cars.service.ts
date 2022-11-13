@@ -3,27 +3,40 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Car } from 'src/Database/cars.entity';
 import { Repository } from 'typeorm';
 
-
 @Injectable()
-export class CarsService { constructor(@InjectRepository(Car) private readonly repo: Repository<Car>) { }
-create(createUser:any) {
-  const newUser = this.repo.create(createUser);
-  return this.repo.save(newUser);
-}
+export class CarsService {
+  constructor(@InjectRepository(Car) private readonly repo: Repository<Car>) {}
 
-findAll() {
-  return `This action returns all users`;
-}
-
-findOne(id: number) {
-  return `This action returns a #${id} user`;
-}
-
-update(id: number, updateUser: any) {
-  return `This action updates a #${id} user`;
-}
-
-remove(id: number) {
-  return `This action removes a #${id} user`;
-}
+  //create a car
+  create(createCar: any) {
+    const newCar = this.repo.create(createCar);
+    return this.repo.save(newCar);
+  }
+  //get all cars
+  findAll() {
+    return this.repo.find();
+  }
+  //get one car by id
+  findOne(id: string) {
+    return this.repo.findOne({ where: { id: parseInt(id, 10) } });
+  }
+  // update a car
+  async update(id: number, updateCar: any) {
+    await this.repo
+      .createQueryBuilder()
+      .update()
+      .set(updateCar)
+      .where('id = :id', { id })
+      .execute();
+    return this.repo.findOne({ where: { id: id } });
+  }
+  //delete a car
+  remove(id: number) {
+    return this.repo
+      .createQueryBuilder()
+      .delete()
+      .from(Car)
+      .where('id = :id', { id })
+      .execute();
+  }
 }
