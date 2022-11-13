@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn,OneToMany} from 'typeorm';
+import { Car } from './cars.entity';
 
 @Entity()
 export class Brand {
@@ -11,9 +12,11 @@ export class Brand {
     nullable: false,
     default: '',
   })
-  username: string;
+  name: string;
   @Column({
     default: '',
   })
   image: string;
+  @OneToMany(()=>Car, (car)=>car.id)
+  cars:Car[]
 }

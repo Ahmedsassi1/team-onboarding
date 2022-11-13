@@ -1,10 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Car } from './cars.entity';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn({
     type: 'bigint',
-    name: 'brand_id',
+    name: 'user_id',
   })
   id: number;
   @Column({
@@ -27,5 +28,7 @@ export class User {
   @Column({
     default: 'user',
   })
-  role: string;
+  role: 'user'|'admin';
+  @OneToMany(()=>Car, (car)=>car.id)
+  cars:Car[]
 }
