@@ -28,7 +28,7 @@ export class User {
   @Column({
     default: 'user',
   })
-  role: 'user'|'admin';
-  @OneToMany(()=>Car, (car)=>car.id)
-  cars:Car[]
+  role: 'user' | 'admin';
+  @OneToMany(() => Car, (car) => car.id)
+  cars: Car[];
 }

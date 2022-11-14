@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn,OneToMany} from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Car } from './cars.entity';
 
 @Entity()
@@ -17,6 +17,6 @@ export class Brand {
     default: '',
   })
   image: string;
-  @OneToMany(()=>Car, (car)=>car.id)
-  cars:Car[]
+  @OneToMany(() => Car, (car) => car.id)
+  cars: Car[];
 }

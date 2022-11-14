@@ -6,7 +6,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { BrandController } from './modules/brands/brands.controller';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
