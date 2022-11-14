@@ -19,14 +19,14 @@ export default function Home() {
             <div className="relative w-200 h-200">
               <img
                 src="https://ae01.alicdn.com/kf/U47c4c5be7e3a40d29aa081d9e0867a57u/Car-Garage-Vintage-Wall-Sticker-Decal-Artist-Sticker-Garage-Wall-Art-Decoration-A00975.jpg_Q90.jpg_.webp"
-                alt="A lounge sofa"
+                alt="Car"
                 role="img"
                 className="w-200 h-200  relative  lg:block"
               />
 
               <div className=" lg:block absolute bottom-0 right-0 bg-red-200 w-1/2">
                 <Link
-                  href="/commun/loginPage"
+                  href="/auth/LoginPage"
                   className="dark:hover:bg-gray-800 dark:bg-white dark:hover:text-gray-50 dark:text-gray-800 bg-gray-800 text-xl xl:text-2xl font-medium text-white flex justify-between w-full items-center p-5 xl:p-6 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 hover:bg-gray-700"
                 >
                   Login
@@ -66,7 +66,7 @@ export default function Home() {
               </div>
               <div className=" lg:block absolute bottom-0 left-0 bg-red-200 w-1/2">
                 <Link
-                  href="commun/RegisterPage"
+                  href="auth/RegisterPage"
                   className="dark:hover:bg-gray-800 dark:bg-white dark:hover:text-gray-50 dark:text-gray-800 bg-gray-800 text-xl xl:text-2xl font-medium text-white flex justify-between w-full items-center p-5 xl:p-6 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 hover:bg-gray-700"
                 >
                   Register
