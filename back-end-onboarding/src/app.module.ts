@@ -4,7 +4,6 @@ import { BrandsModule } from './modules/brands/brands.module';
 import { CarsModule } from './modules/cars/cars.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { BrandController } from './modules/brands/brands.controller';
 
 @Module({
   imports: [
@@ -18,8 +17,7 @@ import { BrandController } from './modules/brands/brands.controller';
         username: 'postgres',
         password: '12345',
         database: 'onboarding',
-        entities: [__dirname + '/Database/*.entity{.ts,.js}'],
-        synchronize: true,
+        entities: [__dirname + '/database/*.entity{.ts,.js}'],
       }),
       inject: [ConfigService],
     }),
