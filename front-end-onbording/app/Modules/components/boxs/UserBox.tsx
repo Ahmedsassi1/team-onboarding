@@ -1,8 +1,6 @@
 import Image from "next/image";
-import AddBtn from "../buttons/AddBtn";
 import UpdateBtn from "../buttons/UpdateBtn";
 import DeleteBtn from "../buttons/DeleteBtn";
-import { userAgent } from "next/server";
 
 export default function UserBox(props: any) {
   return (
