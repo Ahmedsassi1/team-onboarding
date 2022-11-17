@@ -7,7 +7,6 @@ export default function NavBarAdmin() {
         <img
           src="https://img2.freepng.fr/20180702/jwl/kisspng-car-automobile-repair-shop-auto-mechanic-motor-veh-5b3a6134c0fa90.9073188215305526287905.jpg"
           className="mr-3 h-6 sm:h-9"
-          alt="Flowbite Logo"
         />
         <div className="flex items-center md:order-2">
           <button
@@ -19,11 +18,6 @@ export default function NavBarAdmin() {
             data-dropdown-placement="bottom"
           >
             <span className="sr-only">Open user menu</span>
-            <img
-              className="w-8 h-8 rounded-full"
-              src="/docs/images/people/profile-picture-3.jpg"
-              alt="user photo"
-            />
           </button>
           <div
             className="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
@@ -89,7 +83,7 @@ export default function NavBarAdmin() {
           </button>
         </div>
         <div
-          className="hidden justify-between items-center w-full md:flex md:w-auto md:order-1"
+          className="hidden justify-between items-center w-1/2 md:flex md:w-auto md:order-1"
           id="mobile-menu-2"
         >
           <ul className="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">

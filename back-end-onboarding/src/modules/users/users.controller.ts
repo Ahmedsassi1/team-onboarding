@@ -1,40 +1,47 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { UserDto } from 'src/modules/users/dto/users.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly service: UsersService) {}
 
-  @Post('add')
-  create(@Body() createUser: any) {
-    return this.usersService.create(createUser);
+  // @UseGuards(AuthGuard('jwtAdmin'))
+  @Post()
+  addUser(@Body() body: UserDto) {
+    this.service.addUser(body);
+  }
+  // @UseGuards(AuthGuard('jwtAdmin'))
+  @Get()
+  getAll() {
+    return this.service.getAll();
   }
 
-  @Get('all')
-  findAll() {
-    return this.usersService.findAll();
+  @UseGuards(AuthGuard('jwtAdmin'))
+  @Get('/:id')
+  getOneUser(@Param('id') id: string) {
+    return this.service.getOneUser(id);
   }
 
-  @Get('one/:id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(id);
+  // @UseGuards(AuthGuard('jwtAdmin'))
+  @Put('/:id')
+  updateUser(@Param('id') id: string, @Body() body: UserDto) {
+    return this.service.updateUser(id, body);
   }
 
-  @Patch('update/:id')
-  update(@Param('id') id: string, @Body() updateUser: any) {
-    return this.usersService.update(+id, updateUser);
-  }
-
-  @Delete('delete/:id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+  // @UseGuards(AuthGuard('jwtAdmin'))
+  @Delete('/:id')
+  deleteBrand(@Param('id') id: string) {
+    return this.service.deleteUser(id);
   }
 }

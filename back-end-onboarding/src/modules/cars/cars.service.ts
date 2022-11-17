@@ -1,42 +1,41 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Car } from 'src/database/cars.entity';
+import { CarDto } from 'src/modules/cars/dto/cars.dto';
+import { Car } from 'src/common/models/cars.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class CarsService {
-  constructor(@InjectRepository(Car) private readonly repo: Repository<Car>) {}
+  constructor(
+    @InjectRepository(Car) private readonly carRepo: Repository<Car>,
+  ) {}
 
-  //create a car
-  create(createCar: any) {
-    const newCar = this.repo.create(createCar);
-    return this.repo.save(newCar);
+  addCar(body: CarDto) {
+    return this.carRepo.save(new Car(body));
   }
-  //get all cars
-  findAll() {
-    return this.repo.find();
+
+  getAll() {
+    return this.carRepo.find();
   }
-  //get one car by id
-  findOne(id: string) {
-    return this.repo.findOne({ where: { id: parseInt(id, 10) } });
+
+  getAllById(id: any) {
+    return this.carRepo.find({
+      where: {
+        owner: id,
+      },
+      loadRelationIds: true,
+    });
   }
-  // update a car
-  async update(id: number, updateCar: any) {
-    await this.repo
-      .createQueryBuilder()
-      .update()
-      .set(updateCar)
-      .where('id = :id', { id })
-      .execute();
-    return this.repo.findOne({ where: { id: id } });
+
+  getOneCar(id: string) {
+    return this.carRepo.findOne({ where: { id: id } });
   }
-  //delete a car
-  remove(id: number) {
-    return this.repo
-      .createQueryBuilder()
-      .delete()
-      .from(Car)
-      .where('id = :id', { id })
-      .execute();
+
+  updateCar(id: string, body: Partial<CarDto>) {
+    return this.carRepo.update(id, body);
+  }
+
+  deleteCar(id: string) {
+    return this.carRepo.delete(id);
   }
 }

@@ -1,46 +1,33 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Brand } from '../../database/brands.entity';
+import { BrandDto } from 'src/modules/brands/dto/brands.dto';
+import { Brand } from 'src/common/models/brands.entity';
 import { Repository } from 'typeorm';
-export interface BrandInterface {
-  id: number;
-  name: string;
-  image: string;
-}
+
 @Injectable()
 export class BrandsService {
   constructor(
-    @InjectRepository(Brand)
-    private brandRepository: Repository<BrandInterface>,
+    @InjectRepository(Brand) private readonly brandRepo: Repository<Brand>,
   ) {}
 
-  create(brand: BrandInterface): Promise<BrandInterface> {
-    return this.brandRepository.save(this.brandRepository.create(brand));
+  addBrand(body: BrandDto) {
+    const newBrand = this.brandRepo.create(body);
+    return this.brandRepo.save(newBrand);
   }
-  findAll() {
-    return this.brandRepository.find();
+
+  getAll() {
+    return this.brandRepo.find();
   }
-  //get one car by id
-  findOne(id: string) {
-    return this.brandRepository.findOne({ where: { id: parseInt(id, 10) } });
+
+  getOneBrand(id: string) {
+    return this.brandRepo.findOne({ where: { id: id } });
   }
-  // update a car
-  async update(id: number, updateBrand: any) {
-    await this.brandRepository
-      .createQueryBuilder()
-      .update()
-      .set(updateBrand)
-      .where('id = :id', { id })
-      .execute();
-    return this.brandRepository.findOne({ where: { id: id } });
+
+  updateBrand(id: string, body: BrandDto) {
+    return this.brandRepo.update(id, body);
   }
-  //delete a car
-  remove(id: number) {
-    return this.brandRepository
-      .createQueryBuilder()
-      .delete()
-      .from(Brand)
-      .where('id = :id', { id })
-      .execute();
+
+  deleteBrand(id: string) {
+    return this.brandRepo.delete(id);
   }
 }

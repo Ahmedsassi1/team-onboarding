@@ -5,36 +5,44 @@ import {
   Get,
   Param,
   Post,
-  Patch,
+  Put,
+  UseGuards,
 } from '@nestjs/common';
-import { BrandInterface, BrandsService } from './brands.service';
+import { AuthGuard } from '@nestjs/passport';
+import { BrandDto } from 'src/modules/brands/dto/brands.dto';
+import { BrandsService } from './brands.service';
 
-@Controller('brand')
-export class BrandController {
-  constructor(private readonly barndService: BrandsService) {}
+@Controller('brands')
+export class BrandsController {
+  constructor(private readonly service: BrandsService) {}
 
-  @Post('add')
-  create(@Body() createCar: BrandInterface) {
-    return this.barndService.create(createCar);
+  // @UseGuards(AuthGuard('jwtAdmin'))
+  @Post()
+  addBrand(@Body() body: BrandDto) {
+    return this.service.addBrand(body);
   }
 
-  @Get('all')
-  findAll() {
-    return this.barndService.findAll();
+  // @UseGuards(AuthGuard('jwtAdmin'))
+  @Get()
+  getAll() {
+    return this.service.getAll();
   }
 
-  @Get('one/:id')
-  findOne(@Param('id') id: string) {
-    return this.barndService.findOne(id);
+  // @UseGuards(AuthGuard('jwtAdmin'))
+  @Get('/:id')
+  getOneBrand(@Param('id') id: string) {
+    return this.service.getOneBrand(id);
   }
 
-  @Patch('update/:id')
-  update(@Param('id') id: string, @Body() updateBrand: any) {
-    return this.barndService.update(+id, updateBrand);
+  // @UseGuards(AuthGuard('jwtAdmin'))
+  @Put('/:id')
+  updateBrand(@Param('id') id: string, @Body() body: BrandDto) {
+    return this.service.updateBrand(id, body);
   }
 
-  @Delete('delete/:id')
-  remove(@Param('id') id: string) {
-    return this.barndService.remove(+id);
+  // @UseGuards(AuthGuard('jwtAdmin'))
+  @Delete('/:id')
+  deleteBrand(@Param('id') id: string) {
+    return this.service.deleteBrand(id);
   }
 }

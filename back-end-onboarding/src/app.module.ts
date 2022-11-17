@@ -1,32 +1,17 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from './modules/users/users.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { config } from './config/orm.config';
 import { BrandsModule } from './modules/brands/brands.module';
 import { CarsModule } from './modules/cars/cars.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-
+import { UsersModule } from './modules/users/users.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: 'localhost',
-        port: 5432,
-        username: 'postgres',
-        password: '12345',
-        database: 'onboarding',
-        entities: [__dirname + '/database/*.entity{.ts,.js}'],
-      }),
-      inject: [ConfigService],
-    }),
+    TypeOrmModule.forRoot(config),
     UsersModule,
     BrandsModule,
     CarsModule,
+    AuthModule,
   ],
-
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}

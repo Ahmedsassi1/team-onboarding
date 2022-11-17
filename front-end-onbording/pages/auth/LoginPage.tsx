@@ -1,16 +1,40 @@
 import Link from "next/link";
 import { useState } from "react";
+import { useMutation } from "react-query";
+import loginUser from "../../app/Modules/api/user-login";
+import { signIn } from "next-auth/react";
+import { redirect } from "next/dist/server/api-utils";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, SetPassword] = useState("");
+  const [user, setUser] = useState({ email: "", password: "" });
+  const { mutate, isLoading } = useMutation(loginUser, {
+    onSuccess: (data) => {
+      console.log("data", data);
+
+      const message = "Welcome Back";
+      alert(message);
+    },
+    onError: () => {
+      alert("there was an error");
+    },
+  });
+
+  const onSubmit = (data: any) => {
+    mutate(data);
+    signIn("credentials", {
+      email: user.email,
+      password: user.password,
+      redirect: false,
+    });
+  };
+
   return (
     <div className="h-screen flex">
       <div className="flex w-1/2 bg-gradient-to-tr dark:bg-gray-900 i justify-around items-center">
         <div>
           <h1 className="text-white font-bold text-4xl font-sans">GarageTn</h1>
           <p className="text-white mt-1">
-            the Car Gallery that you always want it{" "}
+            the Car Gallery that you always want{" "}
           </p>
         </div>
       </div>
@@ -41,7 +65,11 @@ export default function Login() {
               name=""
               id=""
               placeholder="Email Address"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(event) =>
+                setUser((prevState) => {
+                  return { ...prevState, email: event.target.value };
+                })
+              }
             />
           </div>
           <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
@@ -63,19 +91,27 @@ export default function Login() {
               type="password"
               name=""
               id=""
-              onChange={(e) => SetPassword(e.target.value)}
+              onChange={(event) =>
+                setUser((prevState) => {
+                  return { ...prevState, password: event.target.value };
+                })
+              }
             />
           </div>
           <Link
-            href="/admin/UserManagement"
+            href="/user/homePage"
             type="submit"
             className="block w-full dark:bg-gray-900 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
+            onClick={() => onSubmit(user)}
           >
             Login
           </Link>
-          <span className="text-gray-900  ml-2 hover:text-blue-500 cursor-pointer">
-            Forgot Password ?
-          </span>
+          <Link
+            href="/auth/admin-loggin"
+            className="text-gray-900  ml-2 hover:text-blue-500 cursor-pointer"
+          >
+            Are You An Admin??
+          </Link>
         </form>
       </div>
     </div>

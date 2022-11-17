@@ -1,43 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/database/users.entity';
+import { encodedPassword } from 'src/common/utils/bcrypt';
 import { Repository } from 'typeorm';
+import { User } from '../../common/models/users.entity';
+import { UserDto } from './dto/users.dto';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private readonly repo: Repository<User>,
+    @InjectRepository(User) private readonly userRepo: Repository<User>,
   ) {}
-  //create a user
-  create(createUser: any) {
-    const newUser = this.repo.create(createUser);
-    return this.repo.save(newUser);
+
+  addUser(body: Partial<User>) {
+    body.password = encodedPassword(body.password);
+    const newUser = this.userRepo.create(body);
+    return this.userRepo.save(newUser);
   }
-  //get all user
-  findAll() {
-    return this.repo.find();
+
+  getAll() {
+    return this.userRepo.find();
   }
-  //get one user by id
-  findOne(id: string) {
-    return this.repo.findOne({ where: { id: parseInt(id, 10) } });
+
+  getOneUser(id: string) {
+    return this.userRepo.findOne({ where: { id: id } });
   }
-  //update one user "async to get the updated profile"
-  async update(id: number, updateUser: any) {
-    await this.repo
-      .createQueryBuilder()
-      .update()
-      .set(updateUser)
-      .where('id = :id', { id })
-      .execute();
-    return this.repo.findOne({ where: { id: id } });
+
+  updateUser(id: string, body: UserDto) {
+    return this.userRepo.update(id, body);
   }
-  //remove a user
-  remove(id: number) {
-    return this.repo
-      .createQueryBuilder()
-      .delete()
-      .from(User)
-      .where('id = :id', { id })
-      .execute();
+
+  deleteUser(id: string) {
+    return this.userRepo.delete(id);
   }
 }

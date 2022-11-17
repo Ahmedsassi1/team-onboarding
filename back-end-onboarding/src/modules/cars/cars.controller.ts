@@ -1,40 +1,49 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { CarDto } from 'src/modules/cars/dto/cars.dto';
 import { CarsService } from './cars.service';
 
 @Controller('cars')
 export class CarsController {
-  constructor(private readonly carservice: CarsService) {}
+  constructor(private readonly service: CarsService) {}
 
-  @Post('add')
-  create(@Body() createCar: any) {
-    return this.carservice.create(createCar);
+  // @UseGuards(AuthGuard('jwtAdmin'))
+  @Post()
+  addCar(@Body() body: CarDto) {
+    return this.service.addCar(body);
   }
 
-  @Get('all')
-  findAll() {
-    return this.carservice.findAll();
+  @Get()
+  getAll() {
+    return this.service.getAll();
   }
 
-  @Get('one/:id')
-  findOne(@Param('id') id: string) {
-    return this.carservice.findOne(id);
+  @Get('allcars/:id')
+  getAllById(@Param('id') id: string) {
+    return this.service.getAllById(id);
   }
 
-  @Patch('update/:id')
-  update(@Param('id') id: string, @Body() updateCar: any) {
-    return this.carservice.update(+id, updateCar);
+  @Get('/:id')
+  getOneCar(@Param('id') id: string) {
+    return this.service.getOneCar(id);
   }
 
-  @Delete('delete/:id')
-  remove(@Param('id') id: string) {
-    return this.carservice.remove(+id);
+  @Put('/:id')
+  updateCar(@Param('id') id: string, @Body() body: CarDto) {
+    return this.service.updateCar(id, body);
+  }
+
+  @Delete('/:id')
+  deleteBrand(@Param('id') id: string) {
+    return this.service.deleteCar(id);
   }
 }

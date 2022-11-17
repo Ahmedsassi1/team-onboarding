@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { Brand } from 'src/database/brands.entity';
-import { BrandController } from './brands.controller';
 import { BrandsService } from './brands.service';
+import { BrandsController } from './brands.controller';
+import { Brand } from 'src/common/models/brands.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Brand])],
-  controllers: [BrandController],
   providers: [BrandsService],
+  controllers: [BrandsController],
 })
 export class BrandsModule {}
