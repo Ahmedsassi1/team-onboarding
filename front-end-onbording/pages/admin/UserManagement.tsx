@@ -4,8 +4,6 @@ import { useQuery } from "react-query";
 import UserTable from "../../app/Modules/components/Table/User/User-Table";
 import CreateUserBtn from "../../app/Modules/components/buttons/Create-User-Btn";
 import Search from "../../app/Modules/components/buttons/Search";
-import { NextPage } from "next";
-import { useSession } from "next-auth/react";
 
 export default function UserManagement() {
   const { isLoading, error, data } = useQuery({

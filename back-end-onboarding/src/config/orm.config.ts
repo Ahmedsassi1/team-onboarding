@@ -8,5 +8,5 @@ export const config: TypeOrmModuleOptions = {
   database: 'onboarding',
   entities: [__dirname + './../common/models/*.entity{.ts,.js}'],
   logging: true,
-  synchronize: true,
+  synchronize: false,
 };

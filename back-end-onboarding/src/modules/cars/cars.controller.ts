@@ -13,10 +13,11 @@ import { CarDto } from 'src/modules/cars/dto/cars.dto';
 import { CarsService } from './cars.service';
 
 @Controller('cars')
+@UseGuards(AuthGuard('jwt'))
 export class CarsController {
   constructor(private readonly service: CarsService) {}
 
-  // @UseGuards(AuthGuard('jwtAdmin'))
+  // @UseGuards(AuthGuard())
   @Post()
   addCar(@Body() body: CarDto) {
     return this.service.addCar(body);

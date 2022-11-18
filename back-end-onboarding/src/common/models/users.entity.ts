@@ -30,5 +30,5 @@ export class User {
   photo: string;
 
   @OneToMany(() => Car, (cars) => cars.owner)
-  cars: Car;
+  cars: Car[];
 }

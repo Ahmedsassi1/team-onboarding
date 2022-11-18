@@ -3,7 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CarDto } from 'src/modules/cars/dto/cars.dto';
 import { Car } from 'src/common/models/cars.entity';
 import { Repository } from 'typeorm';
+import { User } from 'src/common/models/users.entity';
 
+interface Owner {
+  id: any;
+}
 @Injectable()
 export class CarsService {
   constructor(
@@ -11,20 +15,28 @@ export class CarsService {
   ) {}
 
   addCar(body: CarDto) {
-    return this.carRepo.save(new Car(body));
+    const newCar = this.carRepo.save(new Car(body));
+    return newCar['model'];
   }
 
   getAll() {
-    return this.carRepo.find();
+    return this.carRepo.find({
+      take: 10,
+    });
   }
 
-  getAllById(id: any) {
-    return this.carRepo.find({
-      where: {
-        owner: id,
-      },
-      loadRelationIds: true,
-    });
+  getAllById(id: string) {
+    return this.carRepo
+      .createQueryBuilder()
+      .select(['id', 'model', 'Car.brandName'])
+      .addSelect((subQuery) => {
+        return subQuery
+          .select('id')
+          .from(User, 'user')
+          .where('id = :id', { id })
+          .limit(1);
+      }, 'user')
+      .execute();
   }
 
   getOneCar(id: string) {
